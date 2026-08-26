@@ -16,6 +16,7 @@ Download: https://www.java.com/en/download/manual.jsp
 
 ### IDE Setup
 (We get the free full version of IntelliJ with our student emails!)
+
 Download: https://www.jetbrains.com/academy/student-pack/
 
 ## Frontend
