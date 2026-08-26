@@ -12,7 +12,7 @@ Download: https://dev.mysql.com/downloads/workbench/
 
 ## Backend
 ### Java Setup
-[Download:] (https://www.java.com/en/download/manual.jsp)
+Download: https://www.java.com/en/download/manual.jsp
 
 ### IDE Setup
 (We get the free full version of IntelliJ with our student emails!)
