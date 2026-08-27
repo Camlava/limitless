@@ -27,7 +27,7 @@ Download: https://dev.mysql.com/downloads/workbench/
 ## Backend
 ### Java Setup
 
-Download: https://www.oracle.com/java/technologies/downloads/
+Download: https://www.oracle.com/java/technologies/downloads/ (Latest version)
 1. Spring Boot needs Java Development Kit to run.
 2. After installation, verify with `java -version` in command prompt.
 
