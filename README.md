@@ -19,9 +19,10 @@ Download: https://www.docker.com/products/docker-desktop/
 
 Download: https://dev.mysql.com/downloads/workbench/
 1. Install MySQL Workbench
-2.  Launch MySQL Workbench
+     - When installing, MySQL will ask to create an account. This isn't necessary for our project and can be skipped.
+3.  Launch MySQL Workbench
      - Click the "+" icon next to MySQL Connections to create a new connection.
-3. Connect to Dockerized MySQL (Use the connection details from the Docker setup above (host, port, user, password).
+4. Connect to Dockerized MySQL (Use the connection details from the Docker setup above (host, port, user, password).
      - If connection fails, wait 10-15s for MySQL to finish initializing and re-try.
 
 ## Backend
