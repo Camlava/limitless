@@ -10,8 +10,8 @@ Download: https://www.docker.com/products/docker-desktop/
 1. Install Docker Desktop
 2. Run `docker-compose up -d` in project root (where docker-compose.yml is (already included in repo))
 3.  Database runs at `localhost:3306`
-     - **user**: root
-     - **password**: rootpassword
+     - **user**: limitless_user
+     - **password**: limitless_pass
      - **db**: limitless_db
 4. Confirm connection with: `docker ps` in command prompt which should list the Docker container running on your system.
  
