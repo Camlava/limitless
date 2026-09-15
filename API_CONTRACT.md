@@ -1,7 +1,8 @@
 ## GET /api/users
 Returns all users.
 
-https://http.cat/[200]
+https://http.cat/status/200
+
 **Response 200 OK:**
 ```json
 [
@@ -20,7 +21,8 @@ Returns the full details for a specified user.
 **URL Parameters**
 * `id` (integer, required): The unique identifier of the user
 
-https://http.cat/[200]
+https://http.cat/status/200
+
 **Response 200 OK:**
 ```json
 {
