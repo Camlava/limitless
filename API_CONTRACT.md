@@ -18,5 +18,17 @@ Returns the full details for a specified user.
 
 **URL Parameters**
 * `id` (integer, required): The unique identifier of the user
+
 **Response 200 OK:**
-[{"id": 3, "created_by": 1, "created_at": 2026-09-15, "username": jlawson0926, "first_name": "Jason", "last_name": "Lawson", "home_address", "3212 Example St SW, Atlanta, GA 30033", "birth_date", 2000-01-01,  
+```json
+{
+  "id": 3, 
+  "created_by": 1, 
+  "created_at": "2026-09-15T00:00:00Z", 
+  "username": "jlawson0926", 
+  "first_name": "Jason", 
+  "last_name": "Lawson", 
+  "home_address": "3212 Example St SW, Atlanta, GA 30033", 
+  "birth_date": "2000-01-01"
+}
+```
