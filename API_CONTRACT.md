@@ -32,3 +32,11 @@ Returns the full details for a specified user.
   "birth_date": "2000-01-01"
 }
 ```
+**Response 404 Not Found:**
+*Returned when the specified user is not found in the database*
+```json
+{
+  "error": "Not Found",
+  "message" "User doesn't exist"
+}
+```
