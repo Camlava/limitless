@@ -15,6 +15,9 @@ Download: https://www.docker.com/products/docker-desktop/
      - **db**: limitless_db
 4. Confirm connection with: `docker ps` in command prompt which should list the Docker container running on your system.
      - Look for a column called `status` and it should says something like `up x minutes (healthy)` to confirm its running.
+5. Note: Run `docker-compose down` to stop the container when you're done working. This leaves the volume intact, so any MySQL data you've entered for testing is still there next time.
+6. Note: Run `docker-compose down -v` at any point (e.g., bad database state) to completely wipe the database and start from the plain migration schema again.
+7. Note: Since both commands above stop the container, run `docker-compose up -d` afterward to start it again.
  
 ### MySQL Workbench Setup
 
