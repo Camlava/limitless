@@ -35,13 +35,12 @@ Download: https://www.oracle.com/java/technologies/downloads/ (Latest version)
 
 ### IDE Setup
 (We get the free full version of IntelliJ with our student emails!)
+Download: https://www.jetbrains.com/academy/student-pack/
 
 ## Running Backend
 1. Ensure Docker MySQL is spun up first: `docker-compose up -d`
 2. Run the backend at `backend/src/main/java/com/example/limitless/LimitlessApplication.java` (click the green Run button)
 3. The backend should start on http://localhost:8080/
-
-Download: https://www.jetbrains.com/academy/student-pack/
 
 ## Frontend
 ### Node.js and npm Setup
