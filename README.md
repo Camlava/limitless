@@ -14,6 +14,7 @@ Download: https://www.docker.com/products/docker-desktop/
      - **password**: limitless_pass
      - **db**: limitless_db
 4. Confirm connection with: `docker ps` in command prompt which should list the Docker container running on your system.
+     - Look for a column called `status` and it should says something like `up x minutes (healthy)` to confirm its running.
  
 ### MySQL Workbench Setup
 
