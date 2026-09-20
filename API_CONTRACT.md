@@ -36,6 +36,13 @@ Returns the full details for a specified user.
 ```json
 {
   "error": "Not Found",
-  "message" "User doesn't exist"
+  "message": "User doesn't exist"
 }
 ```
+**Response 403 Forbidden:**\
+**Returned when the server understands the request but refuses to authorize it.**
+```json
+{
+  "error": "Forbidden"
+  "message": "The user is authenticated but lacks the required role."
+}
