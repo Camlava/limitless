@@ -40,9 +40,18 @@ Returns the full details for a specified user.
 }
 ```
 **Response 403 Forbidden:**\
-**Returned when the server understands the request but refuses to authorize it.**
+*Returned when the server understands the request but refuses to authorize it.*
 ```json
 {
   "error": "Forbidden"
   "message": "The user is authenticated but lacks the required role."
 }
+```
+**Response 401 Unauthorized:**\
+*Returned when a request is made from a user who lacks valid authentication credentials.*
+```json
+{
+  "error": "Unauthorized"
+  "message": "You are unauthorized to make this request."
+}
+```
