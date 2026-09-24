@@ -14,6 +14,10 @@ Download: https://www.docker.com/products/docker-desktop/
      - **password**: limitless_pass
      - **db**: limitless_db
 4. Confirm connection with: `docker ps` in command prompt which should list the Docker container running on your system.
+     - Look for a column called `status` and it should says something like `up x minutes (healthy)` to confirm its running.
+5. Note: Run `docker-compose down` to stop the container when you're done working. This leaves the volume intact, so any MySQL data you've entered for testing is still there next time.
+6. Note: Run `docker-compose down -v` at any point (e.g., bad database state) to completely wipe the database and start from the plain migration schema again.
+7. Note: Since both commands above stop the container, run `docker-compose up -d` afterward to start it again.
  
 ### MySQL Workbench Setup
 
@@ -34,8 +38,12 @@ Download: https://www.oracle.com/java/technologies/downloads/ (Latest version)
 
 ### IDE Setup
 (We get the free full version of IntelliJ with our student emails!)
-
 Download: https://www.jetbrains.com/academy/student-pack/
+
+## Running Backend
+1. Ensure Docker MySQL is spun up first: `docker-compose up -d`
+2. Run the backend at `backend/src/main/java/com/example/limitless/LimitlessApplication.java` (click the green Run button)
+3. The backend should start on http://localhost:8080/
 
 ## Frontend
 ### Node.js and npm Setup
