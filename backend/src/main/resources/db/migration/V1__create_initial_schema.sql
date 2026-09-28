@@ -77,12 +77,11 @@ CREATE TABLE `journal_entries` (
                                    `created_at` datetime
 );
 
--- NOTE: amoutn corrected to amount
 CREATE TABLE `journal_entry_lines` (
                                        `id` integer PRIMARY KEY AUTO_INCREMENT,
                                        `journal_entry_id` integer NOT NULL,
                                        `account_id` integer NOT NULL,
-                                       `side` ENUM ('DEBIT', 'CREDIT'),
+                                       `side` ENUM ('LEFT', 'RIGHT'),
                                        `amount` decimal(15,2)
 );
 
