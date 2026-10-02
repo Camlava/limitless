@@ -1,17 +1,2 @@
 INSERT INTO error_messages (error_code, message) VALUES
                                                      ('AUTH_001', 'Invalid username or password.'),
-                                                     ('AUTH_002', 'This account is suspended.'),
-                                                     ('AUTH_003', 'This account is deactivated.'),
-                                                     ('AUTH_004', 'Account suspended after 3 failed login attempts.'),
-                                                     ('USER_001', 'A user with this email address already exists.'),
-                                                     ('USER_002', 'User doesn''t exist.'),
-                                                     ('USER_003', 'One or more fields are invalid.'),
-                                                     ('PWD_001', 'Password must be at least 8 characters, start with a letter, and include a letter, number, and special character.'),
-                                                     ('PWD_002', 'This password has been used before. Please choose a different password.'),
-                                                     ('PWD_003', 'This reset link is invalid or has expired.'),
-                                                     ('PWD_004', 'The information provided does not match our records.'),
-                                                     ('REQ_001', 'Access request doesn''t exist.'),
-                                                     ('REQ_002', 'First name, last name, and email address are required.'),
-                                                     ('SUSP_001', 'Suspension end date must be after the start date.'),
-                                                     ('AUTHZ_001', 'You are unauthorized to make this request.'),
-                                                     ('AUTHZ_002', 'The user is authenticated but lacks the required role.');
