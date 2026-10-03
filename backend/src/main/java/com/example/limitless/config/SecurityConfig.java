@@ -21,9 +21,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disabling CSRF for now since this is a stateless REST API consumed
-                // by a separate React frontend, not a server-rendered form-based app.
-                // Revisit this if you move to cookie-based session auth later.
                 .csrf(csrf -> csrf.disable())
 
                 .sessionManagement(session ->
@@ -42,10 +39,6 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                // No form login / HTTP Basic popup — this is an API, not a browser app.
-                // You'll add a real authentication mechanism (e.g. JWT filter) once
-                // that decision is made; for now this just controls which routes
-                // are open vs. blocked.
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
 
