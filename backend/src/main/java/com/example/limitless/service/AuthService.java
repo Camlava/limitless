@@ -2,6 +2,7 @@ package com.example.limitless.service;
 
 import com.example.limitless.entity.User;
 import com.example.limitless.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,24 +29,24 @@ public class AuthService {
      */
     @Transactional
     public User login(String username, String password) {
-        User user = findByUsername(username)
-                .orElseThrow(() -> new AuthenticationException("Invalid username or password"));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AuthenticationException("Invalid username or password.", HttpStatus.UNAUTHORIZED));
 
         if (user.getStatus() == User.UserStatus.SUSPENDED) {
-            throw new AuthenticationException("This user is suspended.");
+            throw new AuthenticationException("This account is suspended.", HttpStatus.FORBIDDEN);
         }
-        if (user.getStatus() == User.UserStatus.INACTIVE) {
-            throw new AuthenticationException("This user is inactive.");
+        if (user.getStatus() == User.UserStatus.DEACTIVATED) {
+            throw new AuthenticationException("This account is deactivated.", HttpStatus.FORBIDDEN);
         }
 
         boolean passwordMatches = passwordEncoder.matches(password, user.getPasswordHash());
 
         if (!passwordMatches) {
             handleFailedAttempt(user);
-            throw new AuthenticationException("Invalid username or password");
+            throw new AuthenticationException("Invalid username or password.", HttpStatus.UNAUTHORIZED);
         }
 
-
+        // Successful login resets the failed-attempt counter
         user.setPasswordAttempts(0);
         userRepository.save(user);
 
@@ -70,8 +71,16 @@ public class AuthService {
     }
 
     public static class AuthenticationException extends RuntimeException {
-        public AuthenticationException(String message) {
+        private final HttpStatus status;
+
+        public AuthenticationException(String message, HttpStatus status) {
             super(message);
+            this.status = status;
+        }
+
+        public HttpStatus getStatus() {
+            return status;
         }
     }
+
 }
