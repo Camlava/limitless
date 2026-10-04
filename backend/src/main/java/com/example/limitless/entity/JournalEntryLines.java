@@ -20,7 +20,7 @@ public class JournalEntryLines {
 
     @ManyToOne
     @JoinColumn(name = "journal_entry_id", nullable = false)
-    private JournalEntries journalEntryID;
+    private JournalEntry journalEntryID;
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
