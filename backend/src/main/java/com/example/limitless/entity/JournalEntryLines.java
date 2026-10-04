@@ -27,7 +27,7 @@ public class JournalEntryLines {
     private Account accountID;
 
     @Enumerated(EnumType.STRING)
-    private Side entry_side;
+    private Side side;
 
     @Column(precision = 15, scale = 2)
     private BigDecimal amount;
