@@ -52,3 +52,40 @@ Download (Includes npm): https://nodejs.org/en
 
 ### Fygma Reference
 https://www.figma.com/design/WGmSKcOk5k5QoOOSW8GCkC/Limitless-Prototype?node-id=2-3&t=6fb2WGCzFgTU3TFF-1
+
+## Running Frontend
+1. Start MySQL and the backend first (see above).
+2. In `frontend/`, run `npm install` once, then `npm run dev`.
+3. Open http://localhost:3000. API calls to `/api` are forwarded to the backend on port 8080.
+
+### First administrator (local)
+A fresh database has no users, and only an administrator can create users or approve access requests.
+Set `ADMIN_PASSWORD` (and optionally `ADMIN_USERNAME`, default `admin`, and `ADMIN_EMAIL`) as environment
+variables in your backend Run Configuration; the backend creates that administrator on startup if none exists.
+The password must follow the password rules (8+ characters, starts with a letter, includes a number and a special character).
+
+## Deployment (Railway)
+The root `Dockerfile` builds the React app into the Spring Boot jar, so one service serves both the site and the API.
+
+1. On https://railway.app: **New Project → Deploy from GitHub repo → Camlava/limitless**.
+2. **+ Create → Database → Add MySQL**.
+3. On the app service, **Variables → Raw Editor**:
+   ```
+   DB_URL=jdbc:mysql://${{MySQL.MYSQLHOST}}:${{MySQL.MYSQLPORT}}/${{MySQL.MYSQLDATABASE}}
+   DB_USERNAME=${{MySQL.MYSQLUSER}}
+   DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
+   JWT_SECRET=<random string, 32+ characters — e.g. output of: openssl rand -base64 48>
+   ADMIN_EMAIL=<email for the first administrator>
+   ADMIN_PASSWORD=<password for the first administrator>
+   ```
+4. **Settings → Networking → Generate Domain**, then add `APP_URL=https://<that domain>` (used for links in emails).
+5. Log in as `admin` with `ADMIN_PASSWORD`. Emails are written to the service logs until a mail provider is added.
+
+| Variable | Required in production | Default (local) |
+|---|---|---|
+| `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` | yes | local Docker MySQL |
+| `JWT_SECRET` | yes (app won't start without it) | dev-only value |
+| `APP_URL` | yes | `http://localhost:3000` |
+| `ADMIN_PASSWORD` | first deploy only | unset (no admin created) |
+| `ADMIN_USERNAME`, `ADMIN_EMAIL` | no | `admin`, `admin@limitless.local` |
+| `PORT` | set by Railway | `8080` |

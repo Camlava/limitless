@@ -1,14 +1,12 @@
 server:
+  # Hosts like Railway tell the app which port to listen on through PORT.
   port: ${PORT:8080}
-
-cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/limitless
-    username: limitless_user
-    password: limitless_pass
+    url: ${DB_URL:jdbc:mysql://localhost:3306/limitless}
+    username: ${DB_USERNAME:limitless_user}
+    password: ${DB_PASSWORD:limitless_pass}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -26,3 +24,12 @@ spring:
 jwt:
   secret: ${JWT_SECRET:dev-only-secret-change-me-at-least-32-bytes-long}
   expiration-minutes: 60
+
+app:
+  # Public address of the site, used for links in emails.
+  url: ${APP_URL:http://localhost:3000}
+  # First administrator, created at startup only when ADMIN_PASSWORD is set and no administrator exists yet.
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    email: ${ADMIN_EMAIL:admin@limitless.local}
+    password: ${ADMIN_PASSWORD:}

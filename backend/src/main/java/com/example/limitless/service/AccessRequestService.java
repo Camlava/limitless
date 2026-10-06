@@ -6,6 +6,7 @@ import com.example.limitless.exception.UserException;
 import com.example.limitless.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,16 @@ public class AccessRequestService {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final String appUrl;
 
     public AccessRequestService(UserRepository userRepository, UserService userService,
-                                PasswordEncoder passwordEncoder, EmailService emailService) {
+                                PasswordEncoder passwordEncoder, EmailService emailService,
+                                @Value("${app.url}") String appUrl) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.appUrl = appUrl;
     }
 
     @Transactional
@@ -87,7 +91,7 @@ public class AccessRequestService {
                 "Hi " + saved.getFirstName() + ",\n\nYour request was approved.\n"
                         + "Username: " + saved.getUsername() + "\n"
                         + "Temporary password: " + tempPassword + "\n\n"
-                        + "Log in here: http://localhost:3000/login");
+                        + "Log in here: " + appUrl + "/login");
         return saved;
     }
 
