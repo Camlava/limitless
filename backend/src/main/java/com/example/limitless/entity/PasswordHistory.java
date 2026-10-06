@@ -27,4 +27,10 @@ public class PasswordHistory {
 
     @Column(name = "created_at")
     private LocalDate createdAt;
+
+    public PasswordHistory(User user, String passwordHash, LocalDate createdAt) {
+        this.user = user;
+        this.passwordHash = passwordHash;
+        this.createdAt = createdAt;
+    }
 }
