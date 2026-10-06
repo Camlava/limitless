@@ -6,12 +6,8 @@ import Splash from './pages/auth/Splash.jsx'
 import Login from './pages/auth/Login.jsx'
 import RequestAccess from './pages/auth/RequestAccess.jsx'
 import RequestSubmitted from './pages/auth/RequestSubmitted.jsx'
-import {
-  IdentifyAccount,
-  PasswordUpdated,
-  ResetPassword,
-  SecurityQuestions,
-} from './pages/auth/ForgotPassword.jsx'
+import ForgotPassword from './ForgotPassword.jsx'
+import { PasswordUpdated, ResetPassword } from './pages/auth/ForgotPassword.jsx'
 import Home from './pages/Home.jsx'
 import Dashboard from './pages/admin/Dashboard.jsx'
 import Users from './pages/admin/Users.jsx'
@@ -26,14 +22,13 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Splash />} /> {/* 01 */}
+      <Route path="/forgot-password" element={<ForgotPassword />} /> {/* 06–07, teammate's page with its own layout */}
       <Route path="/welcome" element={<Splash reveal />} /> {/* 02 */}
 
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} /> {/* 03 */}
         <Route path="/request-access" element={<RequestAccess />} /> {/* 04 */}
         <Route path="/request-access/submitted" element={<RequestSubmitted />} /> {/* 05 */}
-        <Route path="/forgot-password" element={<IdentifyAccount />} /> {/* 06 */}
-        <Route path="/forgot-password/verify" element={<SecurityQuestions />} /> {/* 07 */}
         <Route path="/forgot-password/reset" element={<ResetPassword />} /> {/* 08 */}
         <Route path="/forgot-password/done" element={<PasswordUpdated />} /> {/* 09 */}
       </Route>
