@@ -16,3 +16,7 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+
+jwt:
+  secret: ${JWT_SECRET:dev-only-secret-change-me-at-least-32-bytes-long}
+  expiration-minutes: 60

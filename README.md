@@ -49,3 +49,6 @@ Download: https://www.jetbrains.com/academy/student-pack/
 ### Node.js and npm Setup
 Download (Includes npm): https://nodejs.org/en
 1. After installation, verify with `node -v` and `npm -v` in command prompt.
+
+### Fygma Reference
+https://www.figma.com/design/WGmSKcOk5k5QoOOSW8GCkC/Limitless-Prototype?node-id=2-3&t=6fb2WGCzFgTU3TFF-1

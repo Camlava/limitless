@@ -20,14 +20,14 @@ public class JournalEntryLines {
 
     @ManyToOne
     @JoinColumn(name = "journal_entry_id", nullable = false)
-    private JournalEntries journalEntryID;
+    private JournalEntry journalEntryID;
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account accountID;
 
     @Enumerated(EnumType.STRING)
-    private Side entry_side;
+    private Side side;
 
     @Column(precision = 15, scale = 2)
     private BigDecimal amount;
