@@ -1,0 +1,288 @@
+.auth {
+  display: flex;
+  min-height: 100svh;
+  background: var(--navy-950);
+}
+
+.auth__brand {
+  flex: 0 0 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
+  border-right: 1px solid var(--gold-border);
+  background:
+    linear-gradient(123.69deg, rgba(0, 11, 38, 0) 25%, var(--navy-950) 75%),
+    var(--navy-850);
+}
+
+.auth__emblem-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.auth__emblem {
+  width: 400px;
+  max-width: 100%;
+}
+
+.auth__wordmark {
+  width: 273px;
+  max-width: 100%;
+}
+
+.auth__brand-spacer {
+  height: 29px;
+}
+
+.auth__panel {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 120px;
+  min-width: 0;
+}
+
+/* ---------- Form building blocks shared by the auth screens ---------- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 560px;
+  max-width: 100%;
+  min-height: 640px;
+}
+
+.auth-form__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-form__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.15;
+  color: var(--white);
+}
+
+.auth-form__subtitle {
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--white-50);
+}
+
+.auth-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.auth-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.auth-form__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.auth-form__assist {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.auth-form__assist--end {
+  justify-content: flex-end;
+}
+
+.auth-form__assist--center {
+  justify-content: center;
+}
+
+.auth-form__muted {
+  font-weight: 300;
+  color: var(--white-25);
+}
+
+/* Underlined input field */
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-field__label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-field__label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gold-100);
+}
+
+.auth-field__control,
+.auth-field__prompt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--gold-border);
+}
+
+.auth-field__prompt {
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--white);
+}
+
+.auth-field__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--white);
+  outline: none;
+  color-scheme: dark;
+}
+
+.auth-field__input::placeholder {
+  color: var(--white-25);
+}
+
+.auth-field__control:focus-within {
+  border-bottom-color: var(--gold-300);
+}
+
+.auth-field__toggle {
+  display: flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.auth-field__toggle img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Confirmation screens (05, 09) */
+.auth-check {
+  font-size: 128px;
+  line-height: 1;
+  color: var(--gold-100);
+  text-align: center;
+}
+
+.auth-confirm {
+  gap: 36px;
+}
+
+.auth-confirm__note {
+  font-size: 15px;
+  color: var(--white);
+}
+
+.auth-requirements {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.auth-requirements__text {
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--white-50);
+}
+
+@media (max-width: 1200px) {
+  .auth__brand {
+    flex-basis: 420px;
+  }
+
+  .auth__panel {
+    padding: 64px 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .auth {
+    flex-direction: column;
+  }
+
+  .auth__brand {
+    flex-basis: auto;
+    padding: 32px 16px;
+    border-right: 0;
+    border-bottom: 1px solid var(--gold-border);
+  }
+
+  .auth__emblem-container {
+    gap: 16px;
+  }
+
+  .auth__emblem {
+    width: 160px;
+  }
+
+  .auth__wordmark {
+    width: 180px;
+  }
+
+  .auth__brand-spacer {
+    display: none;
+  }
+
+  .auth__panel {
+    padding: 40px 16px;
+  }
+
+  .auth-form {
+    min-height: 0;
+  }
+
+  .auth-form__title {
+    font-size: 44px;
+  }
+
+  .auth-form__row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* 09 keeps the Sign In button low in the panel, as in the design */
+.auth-updated {
+  gap: 0;
+}
+
+.auth-updated .btn {
+  margin-top: 278px;
+}
+
+@media (max-width: 900px) {
+  .auth-updated .btn {
+    margin-top: 48px;
+  }
+}
