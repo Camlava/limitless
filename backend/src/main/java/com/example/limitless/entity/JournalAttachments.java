@@ -20,7 +20,7 @@ public class JournalAttachments {
 
     @ManyToOne
     @JoinColumn(name = "journal_entry_id", nullable = false)
-    private JournalEntries journalEntryID;
+    private JournalEntry journalEntryID;
 
     @Column(name = "file_path", length = 255)
     private String filePath;

@@ -83,7 +83,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public enum UserStatus { ACTIVE, SUSPENDED, INACTIVE}
+    public enum UserStatus {PENDING, ACTIVATED, DEACTIVATED, SUSPENDED}
 
     public enum UserRole {ACCOUNTANT, MANAGER, ADMINISTRATOR}
 }

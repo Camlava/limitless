@@ -1,0 +1,141 @@
+### 1. Login (saves the token automatically)
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "jlawson0926",
+  "password": "TestPass1!"
+}
+
+> {% client.global.set("token", response.body.token); %}
+
+### 2. No token, should be 401/403
+GET http://localhost:8080/api/users
+
+### 3. With token, should be 200
+GET http://localhost:8080/api/users
+Authorization: Bearer {{token}}
+
+### 4. Create user, should be 201 with temporary_password
+POST http://localhost:8080/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "first_name": "Jane",
+  "last_name": "Doe",
+  "email_address": "jane.doe@example.com",
+  "role": "ACCOUNTANT",
+  "security_question1": "Mothers Maiden Name?",
+  "security_question2": "Favorite Sports Team?",
+  "security_question3": "Name of childhood pet?",
+  "security_answer1": "Janie",
+  "security_answer2": "The Horde",
+  "security_answer3": "Tauren"
+}
+
+### 5. Same email again, should be 409
+POST http://localhost:8080/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "first_name": "Jane",
+  "last_name": "Doe",
+  "email_address": "jane.doe@example.com",
+  "role": "ACCOUNTANT"
+}
+
+### 6. Suspend with a bad range, should be 400
+PUT http://localhost:8080/api/users/2/suspend
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "suspension_start": "2026-10-20",
+  "suspension_end": "2026-10-10"
+}
+
+### 7. Suspend with a valid range, status becomes SUSPENDED
+PUT http://localhost:8080/api/users/2/suspend
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "suspension_start": "2026-10-10",
+  "suspension_end": "2026-10-20"
+}
+
+### 8. Activate again
+PUT http://localhost:8080/api/users/2/activate
+Authorization: Bearer {{token}}
+
+### 9. Nonexistent user, should be 404
+GET http://localhost:8080/api/users/9999
+Authorization: Bearer {{token}}
+
+### 10. Expired passwords report
+GET http://localhost:8080/api/users/reports/expired-passwords
+Authorization: Bearer {{token}}
+
+### 11. Test Forgot password
+POST http://localhost:8080/api/auth/forgot-password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "username": "jdoe1026",
+  "email_address": "jane.doe@example.com",
+  "security_answer1": "Janie",
+  "security_answer2": "The Horde",
+  "security_answer3": "Tauren"
+}
+
+### 12. Test Reset Password
+POST http://localhost:8080/api/auth/reset-password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "reset_token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyZXNldCIsInVpZCI6MiwicHVycG9zZSI6InJlc2V0IiwiZnAiOjE5NzQ3OTkxMTksImlhdCI6MTc5MTI3Mjc5MCwiZXhwIjoxNzkxMjczNjkwfQ.ZJipcMtyP_nBPAEq8KNO9ZCtHWolDFjDtJeaVUhFVD1n2JVi7Vnrd5FpPdYyTQF3",
+  "new_password": "Plainsrunner@1"
+}
+
+### 13. Test access request
+POST /api/auth/access-requests
+
+### 14. Access request, no token (expect 201, PENDING)
+POST http://localhost:8080/api/auth/access-requests
+Content-Type: application/json
+
+{
+  "first_name": "Sam",
+  "last_name": "Rivera",
+  "home_address": "5 Request Rd",
+  "birth_date": "1999-05-05",
+  "email_address": "sam.rivera@example.com"
+}
+
+### 15. Approve (expect 200 + username) - replace 5 with the id from the request above
+PUT http://localhost:8080/api/auth/access-requests/3/approve
+Authorization: Bearer {{token}}
+
+### 16. Login as the new user - use the username from the approve response
+### and the temporary password printed in the app console email
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "srivera1006",
+  "password": "PASTE_TEMP_PASSWORD_HERE"
+}
+
+### Send email as admin - replace 5 with the new user's id
+POST http://localhost:8080/api/users/3/send-email
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "subject": "Account Notice",
+  "body": "Your account has been reviewed."
+}
