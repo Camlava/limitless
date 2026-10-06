@@ -33,10 +33,22 @@ public class AuthService {
                 .orElseThrow(() -> new AuthenticationException("Invalid username or password.", HttpStatus.UNAUTHORIZED));
 
         if (user.getStatus() == User.UserStatus.SUSPENDED) {
-            throw new AuthenticationException("This account is suspended.", HttpStatus.FORBIDDEN);
+            LocalDate end = user.getSuspensionEnd();
+            if (end != null && end.isBefore(LocalDate.now())) {
+                user.setStatus(User.UserStatus.ACTIVATED);
+                user.setSuspensionStart(null);
+                user.setSuspensionEnd(null);
+                user.setPasswordAttempts(0);
+                userRepository.save(user);
+            } else {
+                throw new AuthenticationException("This account is suspended.", HttpStatus.FORBIDDEN);
+            }
         }
         if (user.getStatus() == User.UserStatus.DEACTIVATED) {
             throw new AuthenticationException("This account is deactivated.", HttpStatus.FORBIDDEN);
+        }
+        if (user.getStatus() == User.UserStatus.PENDING) {
+            throw new AuthenticationException("This account is pending approval.", HttpStatus.FORBIDDEN);
         }
 
         boolean passwordMatches = passwordEncoder.matches(password, user.getPasswordHash());
