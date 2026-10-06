@@ -1,0 +1,8 @@
+# Production settings (the Docker image runs with SPRING_PROFILES_ACTIVE=prod).
+spring:
+  jpa:
+    show-sql: false
+
+jwt:
+  # No default here: the app refuses to start without a real JWT_SECRET.
+  secret: ${JWT_SECRET}
