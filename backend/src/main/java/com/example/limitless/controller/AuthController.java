@@ -1,26 +1,27 @@
 package com.example.limitless.controller;
 
+import com.example.limitless.config.JwtService;
 import com.example.limitless.entity.User;
 import com.example.limitless.service.AuthService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, JwtService jwtService) {
         this.authService = authService;
+        this.jwtService = jwtService;
     }
 
-    @PostMapping("/api/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
         User user = authService.login(request.username(), request.password());
 
@@ -29,6 +30,7 @@ public class AuthController {
         response.put("username", user.getUsername());
         response.put("picture", user.getPicture());
         response.put("role", user.getRole());
+        response.put("token", jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name()));
 
         return ResponseEntity.ok(response);
     }
