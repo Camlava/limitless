@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { ROLES, STATUSES, fullName, labelFor } from '../../data/mockData.js'
+import { ROLES, STATUSES, formatDate, fullName, labelFor, passwordStatus } from '../../constants.js'
 
-// Table column definitions shared across the admin screens.
+// Table column definitions shared across the admin screens. Rows are UserResponse objects from the API.
 
 export const requestColumns = [
   { key: 'name', header: 'NAME', width: '24%', render: fullName },
   { key: 'email_address', header: 'EMAIL', width: '33%' },
-  { key: 'requested', header: 'REQUESTED', width: '25%' },
+  { key: 'created_at', header: 'REQUESTED', width: '25%', render: (request) => formatDate(request.created_at) },
   {
     key: 'action',
     header: 'ACTION',
@@ -20,3 +20,5 @@ export const userColumns = [
   { key: 'role', header: 'ROLE', width: '16%', render: (user) => labelFor(ROLES, user.role) },
   { key: 'status', header: 'STATUS', width: '20%', render: (user) => labelFor(STATUSES, user.status) },
 ]
+
+export const passwordStatusColumn = { key: 'password_status', header: 'PASSWORD STATUS', render: passwordStatus }

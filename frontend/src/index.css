@@ -136,6 +136,11 @@ textarea {
   min-width: 116px;
 }
 
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
 /* ---------- Text links ---------- */
 .text-link {
   color: var(--gold-100);

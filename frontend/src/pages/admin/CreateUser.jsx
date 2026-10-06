@@ -1,17 +1,38 @@
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { api } from '../../api/client.js'
+import Alert from '../../components/Alert.jsx'
 import { BackLink, Field, FormActions, FormSection, PageHeader, Panel } from '../../components/AdminUI.jsx'
-import { ROLES } from '../../data/mockData.js'
+import { ROLES, formValues } from '../../constants.js'
 
 const roleOptions = [{ value: '', label: 'Select Role' }, ...ROLES]
 
 // 19 Create User — administrator creates an account and assigns a role.
 export default function CreateUser() {
   const navigate = useNavigate()
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [created, setCreated] = useState(null)
 
-  // TODO: POST /api/users
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    navigate('/admin/users')
+    const form = event.currentTarget
+    const values = formValues(form)
+    if (!values.first_name || !values.last_name || !values.email_address || !values.role) {
+      setError('First name, last name, email address, and role are required.')
+      return
+    }
+
+    setSaving(true)
+    setError('')
+    try {
+      setCreated(await api.createUser(values))
+      form.reset()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -23,6 +44,7 @@ export default function CreateUser() {
         title="CREATE USER"
         className="page-panel panel--form"
         onSubmit={handleSubmit}
+        noValidate
         action={<BackLink to="/admin/users">Back to Users</BackLink>}
       >
         <div className="form-body">
@@ -41,11 +63,22 @@ export default function CreateUser() {
               hint="First initial → Full last name → account creation MM/YY"
             />
           </FormSection>
+
+          <div className="form-feedback">
+            <Alert>{error}</Alert>
+            {created && (
+              <Alert tone="success">
+                Created <strong>{created.user.username}</strong>. Temporary password:{' '}
+                <strong className="secret">{created.temporary_password}</strong> — share it with the user securely;
+                it won&apos;t be shown again. <Link to={`/admin/users/${created.user.id}`}>View user →</Link>
+              </Alert>
+            )}
+          </div>
         </div>
 
         <FormActions>
-          <button type="submit" className="btn btn--primary btn--sm">
-            Create User
+          <button type="submit" className="btn btn--primary btn--sm" disabled={saving}>
+            {saving ? 'Creating…' : 'Create User'}
           </button>
           <button type="button" className="btn btn--secondary btn--sm" onClick={() => navigate('/admin/users')}>
             Cancel

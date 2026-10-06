@@ -1,10 +1,16 @@
+import { api } from '../../api/client.js'
+import AsyncContent from '../../components/AsyncContent.jsx'
 import { DataTable, PageHeader, Panel, StatCard } from '../../components/AdminUI.jsx'
-import { accessRequests, users } from '../../data/mockData.js'
+import { isSystemUser } from '../../constants.js'
+import useApi from '../../hooks/useApi.js'
 import { requestColumns } from './columns.jsx'
 
 // 10 Administrator Dashboard
 export default function Dashboard() {
-  const suspended = users.filter((user) => user.status === 'SUSPENDED').length
+  const { data: users, error, loading } = useApi(api.listUsers)
+  const all = users ?? []
+  const pending = all.filter((user) => user.status === 'PENDING')
+  const count = (value) => (loading ? '–' : value)
 
   return (
     <>
@@ -15,23 +21,35 @@ export default function Dashboard() {
       />
 
       <div className="stat-cards">
-        <StatCard label="TOTAL USERS" value={users.length} linkTo="/admin/users" linkLabel="View Users" />
+        <StatCard
+          label="TOTAL USERS"
+          value={count(all.filter(isSystemUser).length)}
+          linkTo="/admin/users"
+          linkLabel="View Users"
+        />
         <StatCard
           label="PENDING REQUESTS"
-          value={accessRequests.length}
+          value={count(pending.length)}
           linkTo="/admin/access-requests"
           linkLabel="Review Requests"
         />
         <StatCard
           label="SUSPENDED USERS"
-          value={suspended}
+          value={count(all.filter((user) => user.status === 'SUSPENDED').length)}
           linkTo="/admin/users?status=SUSPENDED"
           linkLabel="View Users"
         />
       </div>
 
       <Panel title="PENDING ACCESS REQUESTS" className="dashboard-requests">
-        <DataTable columns={requestColumns} rows={accessRequests} caption="Pending access requests" />
+        <AsyncContent loading={loading} error={error}>
+          <DataTable
+            columns={requestColumns}
+            rows={pending}
+            caption="Pending access requests"
+            empty="No pending access requests."
+          />
+        </AsyncContent>
       </Panel>
     </>
   )

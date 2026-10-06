@@ -1,6 +1,9 @@
+import { api } from '../../api/client.js'
+import AsyncContent from '../../components/AsyncContent.jsx'
 import { BackLink, DataTable, PageHeader, Panel, ReportCard } from '../../components/AdminUI.jsx'
-import { STATUSES, labelFor, users } from '../../data/mockData.js'
-import { userColumns } from './columns.jsx'
+import { STATUSES, formatDate, isSystemUser, labelFor } from '../../constants.js'
+import useApi from '../../hooks/useApi.js'
+import { passwordStatusColumn, userColumns } from './columns.jsx'
 
 // 15 Admin Reports
 export function ReportsHome() {
@@ -26,10 +29,10 @@ export function ReportsHome() {
   )
 }
 
-const allUsersColumns = [...userColumns, { key: 'password_status', header: 'PASSWORD STATUS' }]
-
 // 16 All Users Report
 export function AllUsersReport() {
+  const { data, error, loading } = useApi(api.allUsersReport)
+
   return (
     <>
       <PageHeader title="All Users Report" subtitle="View registered users and account information." />
@@ -39,7 +42,14 @@ export function AllUsersReport() {
         className="page-panel"
         action={<BackLink to="/admin/reports">Back to Reports</BackLink>}
       >
-        <DataTable columns={allUsersColumns} rows={users} caption="All users" />
+        <AsyncContent loading={loading} error={error}>
+          <DataTable
+            columns={[...userColumns, passwordStatusColumn]}
+            rows={(data ?? []).filter(isSystemUser)}
+            caption="All users"
+            empty="No users yet."
+          />
+        </AsyncContent>
       </Panel>
     </>
   )
@@ -47,13 +57,13 @@ export function AllUsersReport() {
 
 const expiredColumns = [
   ...userColumns.slice(0, 3),
-  { key: 'password_expires', header: 'PASSWORD EXPIRED', width: '20%' },
+  { key: 'password_expiry', header: 'PASSWORD EXPIRED', width: '20%', render: (user) => formatDate(user.password_expiry) },
   { key: 'status', header: 'ACCOUNT STATUS', render: (user) => labelFor(STATUSES, user.status) },
 ]
 
 // 17 Expired Passwords Report
 export function ExpiredPasswordsReport() {
-  const expired = users.filter((user) => user.password_status === 'Expired')
+  const { data, error, loading } = useApi(api.expiredPasswordsReport)
 
   return (
     <>
@@ -64,7 +74,14 @@ export function ExpiredPasswordsReport() {
         className="page-panel"
         action={<BackLink to="/admin/reports">Back to Reports</BackLink>}
       >
-        <DataTable columns={expiredColumns} rows={expired} caption="Users with expired passwords" />
+        <AsyncContent loading={loading} error={error}>
+          <DataTable
+            columns={expiredColumns}
+            rows={data ?? []}
+            caption="Users with expired passwords"
+            empty="No expired passwords."
+          />
+        </AsyncContent>
       </Panel>
     </>
   )

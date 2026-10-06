@@ -274,6 +274,20 @@
   text-decoration: underline;
 }
 
+.data-table__empty {
+  color: var(--ink-muted);
+}
+
+.async-status {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.panel > .alert {
+  margin-top: 16px;
+}
+
 /* ---------- Toolbar (search + filters) ---------- */
 .toolbar {
   display: flex;
@@ -461,4 +475,39 @@
   .report-card {
     width: 100%;
   }
+}
+
+/* ---------- Form feedback ---------- */
+.form-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 560px;
+  margin-top: 24px;
+}
+
+.form-feedback:empty {
+  display: none;
+}
+
+.form-feedback a {
+  color: inherit;
+  font-weight: 600;
+}
+
+.secret {
+  font-family: ui-monospace, Menlo, monospace;
+  user-select: all;
+}
+
+.email-form > .alert {
+  max-width: 560px;
+}
+
+.home-note {
+  max-width: 640px;
+  margin-top: 24px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
 }

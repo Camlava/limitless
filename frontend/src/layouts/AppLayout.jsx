@@ -1,16 +1,19 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import Logo from '../components/Logo.jsx'
 import UserMenu from '../components/UserMenu.jsx'
-import { currentUser } from '../data/mockData.js'
+import { useAuth } from '../auth/AuthContext.jsx'
+import { homePathFor } from '../constants.js'
 import './AppLayout.css'
 
 // `match` lists the path prefixes that highlight each item (access requests live under Dashboard).
-const NAV_ITEMS = [
+const ADMIN_NAV = [
   { label: 'Dashboard', to: '/admin', match: ['/admin/access-requests'], exact: '/admin' },
   { label: 'Users', to: '/admin/users', match: ['/admin/users'] },
   { label: 'Reports', to: '/admin/reports', match: ['/admin/reports'] },
   { label: 'Email', to: '/admin/email', match: ['/admin/email'] },
 ]
+
+const MEMBER_NAV = [{ label: 'Home', to: '/home', match: [], exact: '/home' }]
 
 function isActive(item, pathname) {
   const path = pathname.replace(/\/$/, '')
@@ -20,15 +23,17 @@ function isActive(item, pathname) {
 // Screens 10–19: sidebar navigation, signed-in user in the top right corner.
 export default function AppLayout() {
   const { pathname } = useLocation()
+  const { user, logout } = useAuth()
+  const navItems = user.role === 'ADMINISTRATOR' ? ADMIN_NAV : MEMBER_NAV
 
   return (
     <div className="app">
       <aside className="app__sidebar">
-        <Link to="/admin" className="app__logo" aria-label="Limitless home">
+        <Link to={homePathFor(user)} className="app__logo" aria-label="Limitless home">
           <Logo />
         </Link>
         <nav className="app__nav" aria-label="Main">
-          {NAV_ITEMS.map((item) => {
+          {navItems.map((item) => {
             const active = isActive(item, pathname)
             return (
               <Link
@@ -44,7 +49,7 @@ export default function AppLayout() {
         </nav>
       </aside>
       <div className="app__main">
-        <UserMenu user={currentUser} />
+        <UserMenu user={user} onSignOut={logout} />
         <Outlet />
       </div>
     </div>

@@ -1,18 +1,43 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import Alert from '../../components/Alert.jsx'
 import { AuthField, AuthHeader } from '../../components/AuthForm.jsx'
+import { useAuth } from '../../auth/AuthContext.jsx'
+import { formValues, homePathFor } from '../../constants.js'
 
-// 03 Login
+// 03 Login — three wrong passwords suspend the account (enforced by the API).
 export default function Login() {
+  const { user, login } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
-  // TODO: POST /api/auth/login, then route by role.
-  const handleSubmit = (event) => {
+  if (user) return <Navigate to={homePathFor(user)} replace />
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    navigate('/admin')
+    const { username, password } = formValues(event.currentTarget)
+    if (!username || !password) {
+      setError('Please enter your username and password.')
+      return
+    }
+
+    setSubmitting(true)
+    setError('')
+    try {
+      const signedIn = await login(username, password)
+      const from = location.state?.from
+      const canReturn = from && (signedIn.role === 'ADMINISTRATOR' || !from.startsWith('/admin'))
+      navigate(canReturn ? from : homePathFor(signedIn), { replace: true })
+    } catch (err) {
+      setError(err.message)
+      setSubmitting(false)
+    }
   }
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit}>
+    <form className="auth-form" onSubmit={handleSubmit} noValidate>
       <AuthHeader title="Welcome to Limitless" subtitle="Sign in to access your financial workspace." />
 
       <div className="auth-form__fields">
@@ -32,8 +57,9 @@ export default function Login() {
       </div>
 
       <div className="auth-form__actions">
-        <button type="submit" className="btn btn--primary btn--lg btn--block">
-          Sign In
+        <Alert surface="dark">{error}</Alert>
+        <button type="submit" className="btn btn--primary btn--lg btn--block" disabled={submitting}>
+          {submitting ? 'Signing In…' : 'Sign In'}
         </button>
         <Link to="/request-access" className="btn btn--secondary btn--lg btn--block">
           Request Access / Create Account
@@ -42,7 +68,7 @@ export default function Login() {
 
       <div className="auth-form__assist">
         <span className="auth-form__muted">Need assistance?</span>
-        <a href="mailto:support@limitless.example" className="text-link">
+        <a href="mailto:admin@limitless.local" className="text-link">
           Contact Support
         </a>
       </div>

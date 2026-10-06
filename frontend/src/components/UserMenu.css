@@ -42,3 +42,54 @@
   background: var(--avatar);
   object-fit: cover;
 }
+
+span.user-menu__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--navy-800);
+}
+
+.user-menu {
+  z-index: 10;
+}
+
+.user-menu__dropdown {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  min-width: 160px;
+  padding: 8px 0;
+  border: 1px solid var(--gold-border);
+  border-radius: 6px;
+  background: var(--navy-card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.user-menu__role {
+  padding: 4px 14px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gold-100);
+  border-bottom: 1px solid var(--gold-border);
+}
+
+.user-menu__item {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 14px;
+  border: 0;
+  background: none;
+  font-size: 13px;
+  color: var(--white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.user-menu__item:hover {
+  background: var(--navy-800);
+}

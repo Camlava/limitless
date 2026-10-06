@@ -27,7 +27,8 @@ public class AuthService {
      *This method checks the inputted username in the database and if it exists and isnt suspended or inactive
      *then it will check if the password matches, if so it will return the user
      */
-    @Transactional
+    // noRollbackFor: a failed login throws, but the failed-attempt count and suspension must still be saved
+    @Transactional(noRollbackFor = AuthenticationException.class)
     public User login(String username, String password) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AuthenticationException("Invalid username or password.", HttpStatus.UNAUTHORIZED));

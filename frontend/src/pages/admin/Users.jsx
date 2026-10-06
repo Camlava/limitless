@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { api } from '../../api/client.js'
+import AsyncContent from '../../components/AsyncContent.jsx'
 import { DataTable, PageHeader, Panel, Select } from '../../components/AdminUI.jsx'
-import { ROLES, STATUSES, users } from '../../data/mockData.js'
+import { ROLES, STATUSES, fullName, isSystemUser } from '../../constants.js'
+import useApi from '../../hooks/useApi.js'
 import { userColumns } from './columns.jsx'
 
 const columns = [
@@ -8,9 +12,30 @@ const columns = [
   { key: 'action', header: 'ACTION', render: (user) => <Link to={`/admin/users/${user.id}`}>Edit →</Link> },
 ]
 
+const matchesSearch = (user, term) =>
+  [fullName(user), user.username, user.email_address].some((text) => text?.toLowerCase().includes(term))
+
 // 11 User Management
 export default function Users() {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [search, setSearch] = useState('')
+  const role = searchParams.get('role') ?? ''
+  const status = searchParams.get('status') ?? ''
+  const { data, error, loading } = useApi(api.listUsers)
+
+  const setFilter = (key, value) => {
+    const next = new URLSearchParams(searchParams)
+    if (value) next.set(key, value)
+    else next.delete(key)
+    setSearchParams(next, { replace: true })
+  }
+
+  const term = search.trim().toLowerCase()
+  const rows = (data ?? [])
+    .filter(isSystemUser)
+    .filter((user) => !role || user.role === role)
+    .filter((user) => !status || user.status === status)
+    .filter((user) => !term || matchesSearch(user, term))
 
   return (
     <>
@@ -26,24 +51,35 @@ export default function Users() {
         }
       >
         <div className="toolbar" role="search">
-          <input className="toolbar__search" type="search" placeholder="Search users..." aria-label="Search users" />
+          <input
+            className="toolbar__search"
+            type="search"
+            placeholder="Search users..."
+            aria-label="Search users"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
           <Select
             wrapClassName="select--inline"
             className="toolbar__filter"
             aria-label="Filter by role"
             options={[{ value: '', label: 'Role' }, ...ROLES]}
-            defaultValue=""
+            value={role}
+            onChange={(event) => setFilter('role', event.target.value)}
           />
           <Select
             wrapClassName="select--inline"
             className="toolbar__filter"
             aria-label="Filter by status"
-            options={[{ value: '', label: 'Status' }, ...STATUSES]}
-            defaultValue={searchParams.get('status') ?? ''}
+            options={[{ value: '', label: 'Status' }, ...STATUSES.filter((option) => option.value !== 'PENDING')]}
+            value={status}
+            onChange={(event) => setFilter('status', event.target.value)}
           />
         </div>
 
-        <DataTable columns={columns} rows={users} caption="Users" />
+        <AsyncContent loading={loading} error={error}>
+          <DataTable columns={columns} rows={rows} caption="Users" empty="No users match these filters." />
+        </AsyncContent>
       </Panel>
     </>
   )

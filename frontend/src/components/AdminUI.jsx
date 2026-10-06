@@ -95,7 +95,7 @@ export function FormActions({ children }) {
 }
 
 // `columns`: [{ key, header, width?, render? }]
-export function DataTable({ columns, rows, rowKey = 'id', caption }) {
+export function DataTable({ columns, rows, rowKey = 'id', caption, empty = 'Nothing to show yet.' }) {
   return (
     <div className="data-table__scroll">
       <table className="data-table">
@@ -115,6 +115,13 @@ export function DataTable({ columns, rows, rowKey = 'id', caption }) {
           </tr>
         </thead>
         <tbody>
+          {rows.length === 0 && (
+            <tr>
+              <td colSpan={columns.length} className="data-table__empty">
+                {empty}
+              </td>
+            </tr>
+          )}
           {rows.map((row) => (
             <tr key={row[rowKey]}>
               {columns.map((column) => (

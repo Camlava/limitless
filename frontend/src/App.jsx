@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AppLayout from './layouts/AppLayout.jsx'
 import AuthLayout from './layouts/AuthLayout.jsx'
+import RequireAuth from './auth/RequireAuth.jsx'
 import Splash from './pages/auth/Splash.jsx'
 import Login from './pages/auth/Login.jsx'
 import RequestAccess from './pages/auth/RequestAccess.jsx'
@@ -11,6 +12,7 @@ import {
   ResetPassword,
   SecurityQuestions,
 } from './pages/auth/ForgotPassword.jsx'
+import Home from './pages/Home.jsx'
 import Dashboard from './pages/admin/Dashboard.jsx'
 import Users from './pages/admin/Users.jsx'
 import CreateUser from './pages/admin/CreateUser.jsx'
@@ -36,17 +38,25 @@ function App() {
         <Route path="/forgot-password/done" element={<PasswordUpdated />} /> {/* 09 */}
       </Route>
 
-      <Route path="/admin" element={<AppLayout />}>
-        <Route index element={<Dashboard />} /> {/* 10 */}
-        <Route path="users" element={<Users />} /> {/* 11 */}
-        <Route path="users/new" element={<CreateUser />} /> {/* 19 */}
-        <Route path="users/:id" element={<EditUser />} /> {/* 12 */}
-        <Route path="access-requests" element={<PendingRequests />} /> {/* 13 */}
-        <Route path="access-requests/:id" element={<ReviewRequest />} /> {/* 14 */}
-        <Route path="reports" element={<ReportsHome />} /> {/* 15 */}
-        <Route path="reports/users" element={<AllUsersReport />} /> {/* 16 */}
-        <Route path="reports/expired-passwords" element={<ExpiredPasswordsReport />} /> {/* 17 */}
-        <Route path="email" element={<Email />} /> {/* 18 */}
+      <Route element={<RequireAuth />}>
+        <Route element={<AppLayout />}>
+          <Route path="/home" element={<Home />} /> {/* Manager / accountant landing page */}
+        </Route>
+      </Route>
+
+      <Route element={<RequireAuth role="ADMINISTRATOR" />}>
+        <Route path="/admin" element={<AppLayout />}>
+          <Route index element={<Dashboard />} /> {/* 10 */}
+          <Route path="users" element={<Users />} /> {/* 11 */}
+          <Route path="users/new" element={<CreateUser />} /> {/* 19 */}
+          <Route path="users/:id" element={<EditUser />} /> {/* 12 */}
+          <Route path="access-requests" element={<PendingRequests />} /> {/* 13 */}
+          <Route path="access-requests/:id" element={<ReviewRequest />} /> {/* 14 */}
+          <Route path="reports" element={<ReportsHome />} /> {/* 15 */}
+          <Route path="reports/users" element={<AllUsersReport />} /> {/* 16 */}
+          <Route path="reports/expired-passwords" element={<ExpiredPasswordsReport />} /> {/* 17 */}
+          <Route path="email" element={<Email />} /> {/* 18 */}
+        </Route>
       </Route>
 
       <Route path="*" element={<Navigate to="/login" replace />} />
