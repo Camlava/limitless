@@ -57,10 +57,11 @@ public class SecurityConfig {
     }
 
     // Browsers block calls from the React app's origin unless the API allows it.
-    // Set CORS_ALLOWED_ORIGINS to the deployed frontend URL (comma-separated for several).
+    // Defaults to APP_URL (the site's own address); set CORS_ALLOWED_ORIGINS for other frontends
+    // (comma-separated for several).
     @Bean
     public CorsConfigurationSource corsConfigurationSource(
-            @Value("${cors.allowed-origins:http://localhost:3000}") String origins) {
+            @Value("${cors.allowed-origins:${app.url}}") String origins) {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList(origins.split(",")));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));

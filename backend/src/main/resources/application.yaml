@@ -1,6 +1,9 @@
 server:
   # Hosts like Railway tell the app which port to listen on through PORT.
   port: ${PORT:8080}
+  # Behind Railway's HTTPS proxy: use its X-Forwarded-* headers so the app knows the real
+  # https://<domain> address. Without this, same-site requests look cross-origin and fail CORS.
+  forward-headers-strategy: framework
 
 spring:
   datasource:
