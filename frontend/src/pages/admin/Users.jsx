@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { DataTable, PageHeader, Panel } from '../../components/AdminUI.jsx'
+import { DataTable, PageHeader, Panel, Select } from '../../components/AdminUI.jsx'
 import { ROLES, STATUSES, users } from '../../data/mockData.js'
 import { userColumns } from './columns.jsx'
 
@@ -27,26 +27,20 @@ export default function Users() {
       >
         <div className="toolbar" role="search">
           <input className="toolbar__search" type="search" placeholder="Search users..." aria-label="Search users" />
-          <select className="toolbar__filter field__control--select" aria-label="Filter by role" defaultValue="">
-            <option value="">Role</option>
-            {ROLES.map((role) => (
-              <option key={role.value} value={role.value}>
-                {role.label}
-              </option>
-            ))}
-          </select>
-          <select
-            className="toolbar__filter field__control--select"
+          <Select
+            wrapClassName="select--inline"
+            className="toolbar__filter"
+            aria-label="Filter by role"
+            options={[{ value: '', label: 'Role' }, ...ROLES]}
+            defaultValue=""
+          />
+          <Select
+            wrapClassName="select--inline"
+            className="toolbar__filter"
             aria-label="Filter by status"
+            options={[{ value: '', label: 'Status' }, ...STATUSES]}
             defaultValue={searchParams.get('status') ?? ''}
-          >
-            <option value="">Status</option>
-            {STATUSES.map((status) => (
-              <option key={status.value} value={status.value}>
-                {status.label}
-              </option>
-            ))}
-          </select>
+          />
         </div>
 
         <DataTable columns={columns} rows={users} caption="Users" />

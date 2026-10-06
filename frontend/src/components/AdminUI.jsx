@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import { Link } from 'react-router-dom'
+import caretIcon from '../assets/brand/caret.svg'
 import lockIcon from '../assets/brand/lock.svg'
 import './AdminUI.css'
 
@@ -45,6 +46,22 @@ export function FormSection({ title, children }) {
   )
 }
 
+// Native select with the design's grey caret. `options`: [{ value, label }]
+export function Select({ options, className = '', wrapClassName = '', ...selectProps }) {
+  return (
+    <span className={`select ${wrapClassName}`}>
+      <select className={className} {...selectProps}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <img className="select__caret" src={caretIcon} alt="" width="8.66" height="6.75" />
+    </span>
+  )
+}
+
 // Small pill input used on the admin forms. Pass `options` for a select, `readOnly` for a locked field.
 export function Field({ label, options, readOnly, hint, className = '', ...controlProps }) {
   const id = useId()
@@ -53,13 +70,7 @@ export function Field({ label, options, readOnly, hint, className = '', ...contr
   let control
   if (options) {
     control = (
-      <select id={id} className={`${controlClass} field__control--select`} {...controlProps}>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <Select id={id} options={options} className={`${controlClass} field__control--select`} {...controlProps} />
     )
   } else {
     control = <input id={id} className={controlClass} readOnly={readOnly} {...controlProps} />

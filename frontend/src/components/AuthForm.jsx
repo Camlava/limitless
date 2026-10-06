@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import eyeIcon from '../assets/brand/eye.svg'
+import eyeIcon from '../assets/brand/eye.png'
 
 export function AuthHeader({ title, subtitle }) {
   return (

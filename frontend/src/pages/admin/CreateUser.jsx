@@ -37,8 +37,8 @@ export default function CreateUser() {
               label="USERNAME"
               value="Generated automatically"
               readOnly
-              className="field--wide"
-              hint="First initial → last name → account creation month/year"
+              className="field--stack"
+              hint="First initial → Full last name → account creation MM/YY"
             />
           </FormSection>
         </div>
