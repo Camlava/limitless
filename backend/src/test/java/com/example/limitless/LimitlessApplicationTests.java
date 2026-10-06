@@ -11,9 +11,4 @@ class LimitlessApplicationTests {
 	void contextLoads() {
 	}
 
-
-	@Test
-	void printTestHash() {
-		System.out.println(new BCryptPasswordEncoder().encode("TestPass1!"));
-	}
 }
