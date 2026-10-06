@@ -1,0 +1,446 @@
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Page header ---------- */
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: calc(100% - 140px);
+}
+
+.page-header__eyebrow {
+  font-size: 12px;
+  color: var(--gold-100);
+}
+
+.page-header__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1.15;
+  color: var(--white);
+}
+
+.page-header__subtitle {
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--white);
+  opacity: 0.5;
+}
+
+/* ---------- Cream panel ---------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  padding: 23px 22px 27px 34px;
+  border: 1px solid var(--paper-line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.page-panel {
+  flex: 1;
+  margin-top: 38px;
+}
+
+.panel__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel__title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  color: var(--ink);
+}
+
+/* ---------- Form fields ---------- */
+.form-body {
+  margin-top: 24px;
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  margin-top: 40px;
+  padding-left: 33px;
+}
+
+.email-form > .field:not(:last-child) {
+  width: 159px;
+}
+
+.form-section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.form-section + .form-section {
+  margin-top: 32px;
+}
+
+.form-section__title {
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold-100);
+}
+
+.form-section__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 159px);
+  column-gap: 64px;
+  row-gap: 19px;
+  margin-top: 24px;
+  padding-left: 9px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field--stack {
+  grid-column: 1;
+}
+
+.field__label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.field__wrap {
+  position: relative;
+}
+
+.field__control {
+  width: 100%;
+  height: 28px;
+  padding: 0 4px;
+  border: 1px solid var(--paper-input);
+  border-radius: 7px;
+  background: var(--paper-input);
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.field__control::placeholder {
+  color: var(--ink);
+}
+
+.field__control--locked {
+  padding-right: 24px;
+  border-color: var(--paper-readonly);
+  background: var(--paper-readonly);
+  color: var(--ink-muted);
+  text-overflow: ellipsis;
+}
+
+.field__control--select {
+  appearance: none;
+  padding-right: 22px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink-placeholder) 50%),
+    linear-gradient(135deg, var(--ink-placeholder) 50%, transparent 50%);
+  background-position:
+    calc(100% - 15px) 12px,
+    calc(100% - 10px) 12px;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.field__lock {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.field__hint {
+  font-size: 12px;
+  line-height: 1.15;
+  color: var(--ink-muted);
+}
+
+.field__textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 14px 13px;
+  border: 1px solid var(--paper-input);
+  border-radius: 7px;
+  background: var(--paper-input);
+  font-size: 12px;
+  color: var(--ink);
+  resize: vertical;
+}
+
+.field__textarea::placeholder {
+  color: var(--ink);
+}
+
+/* Forms: fields on the left, Save/Cancel stacked in the bottom-right corner */
+.panel--form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr;
+  align-content: start;
+}
+
+.panel--form > .panel__head {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+  align-self: end;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* ---------- Tables ---------- */
+.data-table__scroll {
+  overflow-x: auto;
+  margin-top: 40px;
+  padding: 0 0 0 11px;
+}
+
+.data-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.15;
+  color: var(--ink);
+  text-align: left;
+}
+
+.data-table th {
+  padding: 0 8px 26px 0;
+  font-weight: 600;
+  border-bottom: 1px solid var(--paper-line);
+}
+
+.data-table td {
+  padding: 16px 8px 24px 0;
+  font-weight: 400;
+  border-bottom: 1px solid var(--paper-line);
+}
+
+.data-table a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.data-table a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Toolbar (search + filters) ---------- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.toolbar__search,
+.toolbar__filter {
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--paper-input);
+  border-radius: 7px;
+  background-color: var(--paper-input);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.toolbar__search {
+  width: 250px;
+}
+
+.toolbar__search::placeholder {
+  color: var(--ink-placeholder);
+}
+
+.toolbar__filter {
+  width: auto;
+  color: var(--ink-placeholder);
+}
+
+/* ---------- Dashboard stat cards ---------- */
+.stat-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  margin-top: 49px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 280px;
+  height: 150px;
+  padding: 17px 15px 13px;
+  border: 1px solid var(--gold-100);
+  border-radius: 10px;
+  background: var(--navy-card);
+}
+
+.stat-card__label {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.15;
+  color: var(--gold-100);
+}
+
+.stat-card__value {
+  font-family: var(--serif);
+  font-size: 50px;
+  line-height: 1.15;
+  color: var(--white);
+}
+
+.stat-card__link {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.15;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.stat-card__link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-requests {
+  max-width: 974px;
+  margin-top: 47px;
+  padding: 18px 46px 16px 24px;
+}
+
+.dashboard-requests .data-table__scroll {
+  margin-top: 24px;
+  padding-left: 4px;
+}
+
+/* ---------- Report cards ---------- */
+.report-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  margin-top: 33px;
+}
+
+.report-card {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 280px;
+  height: 150px;
+  padding: 17px 15px 13px;
+  border: 1px solid var(--paper-line);
+  border-radius: 10px;
+  background: var(--paper-card);
+  line-height: 1.15;
+}
+
+.report-card__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.report-card__description {
+  flex: 1;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.report-card__link {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--gold-100);
+  text-decoration: none;
+}
+
+.report-card__link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .page-header__title {
+    font-size: 34px;
+  }
+
+  .stat-cards,
+  .report-cards {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-header {
+    max-width: none;
+  }
+
+  .panel {
+    padding: 20px 16px;
+  }
+
+  .form-section__grid {
+    grid-template-columns: 1fr;
+    padding-left: 0;
+  }
+
+  .panel--form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    align-items: stretch;
+  }
+
+  .email-form {
+    padding-left: 0;
+  }
+
+  .email-form > .field:not(:last-child) {
+    width: 100%;
+  }
+
+  .stat-card,
+  .report-card {
+    width: 100%;
+  }
+}

@@ -1,0 +1,40 @@
+.emblem {
+  display: block;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.wordmark {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 1;
+  overflow: hidden;
+}
+
+.wordmark img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wordmark--cropped img {
+  left: -2.45%;
+  top: -7.36%;
+}
+
+/* Horizontal lockup used in the app sidebar */
+.logo {
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.logo__emblem {
+  width: 68px;
+}
+
+.logo__wordmark {
+  width: 143px;
+  margin-top: 5px;
+}

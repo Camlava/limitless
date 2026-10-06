@@ -1,0 +1,47 @@
+.splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100svh;
+  padding: 16px;
+  border: 0;
+  background: var(--navy-950);
+  cursor: pointer;
+}
+
+.splash__emblem {
+  width: min(811px, 90vw);
+}
+
+.splash--reveal {
+  justify-content: flex-start;
+  padding-top: min(122px, 13vh);
+}
+
+.splash--reveal .splash__emblem {
+  width: min(811px, 90vw, 80vh);
+}
+
+.splash__wordmark {
+  width: min(692px, 77vw, 68vh);
+  margin-top: -26px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .splash__emblem,
+  .splash__wordmark {
+    animation: splash-fade 700ms ease-out both;
+  }
+
+  .splash--reveal .splash__emblem {
+    animation: none;
+  }
+}
+
+@keyframes splash-fade {
+  from {
+    opacity: 0;
+  }
+}
